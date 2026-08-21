@@ -1,0 +1,304 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"> 
+  <title>Eventora | College Event Management</title> 
+  <link rel="stylesheet" href="style.css">
+</head> 
+<body> 
+ 
+<header class="top" id="appTop"> 
+  <div class="logo"><span class="logo-mark">E</span><div><b>Eventora</b><small>College event management</small></div></div> 
+  <div class="search">⌕ <input id="search" placeholder="Search events, workshops..." /></div> 
+  <div class="top-right"><span class="role" id="roleBadge">Student</span><button class="btn light" id="logout">Logout</button><div class="avatar">SA</div></div> 
+</header> 
+ 
+<div class="layout" id="app"> 
+<aside class="side"> 
+  <div class="label" id="studentLabel">STUDENT</div> 
+  <div class="nav" id="studentNav"> 
+    <button class="active" data-screen="home">⌂ <span>Home</span></button> 
+    <button data-screen="explore">◫ <span>Explore Events</span></button> 
+    <button data-screen="registrations">♡ <span>My Registrations</span></button> 
+    <button data-screen="notifications">♧ <span>Notifications</span><b>3</b></button> 
+    <button data-screen="feedback">★ <span>Feedback</span></button> 
+  </div> 
+  <div class="label" id="organizerLabel">ORGANIZER</div> 
+  <div class="nav" id="organizerNav"> 
+    <button class="active" data-screen="orgDashboard">⌂ <span>Dashboard</span></button> 
+    <button data-screen="create">＋ <span>Create Event</span></button> 
+    <button data-screen="manage">▤ <span>Manage Registrations</span></button> 
+    <button data-screen="attendance">⌁ <span>Attendance / QR</span></button> 
+    <button data-screen="announcements">◈ <span>Announcements</span></button> 
+    <button data-screen="analytics">◒ <span>Event Analytics</span></button> 
+  </div> 
+  <div class="label" id="adminLabel">ADMIN</div> 
+  <div class="nav" id="adminNav"> 
+    <button class="active" data-screen="adminEvents">◫ <span>Events</span></button> 
+    <button data-screen="approvals">✓ <span>Approve / Reject</span></button> 
+    <button data-screen="users">♙ <span>Manage Users</span></button> 
+    <button data-screen="monitor">◉ <span>Monitor Events</span></button> 
+    <button data-screen="reports">▥ <span>Reports & Analytics</span></button> 
+  </div> 
+  <div class="side-foot" id="roleFoot">Student workspace</div> 
+</aside> 
+ 
+<main> 
+<section class="screen active" id="home"> 
+  <div class="hero"> 
+    <div><span class="eyebrow">YOUR CAMPUS. ONE PLATFORM.</span><h1>Discover events.<br><span>Make memories.</span></h1><p>Browse campus events, register instantly, get your digital event pass, and keep every campus experience in one place.</p><div class="hero-actions"><button class="btn primary" data-go="explore">Explore events →</button><button class="btn light" data-go="registrations">My registrations</button></div></div> 
+    <div class="up-next"><span class="eyebrow">NEXT UP</span><strong>UI/UX Design Workshop</strong><small>Aug 28 · 2:00 PM · Design Block</small><div style="margin-top:14px"><div class="sub">Seats remaining</div><div class="progress"><i style="width:72%"></i></div></div><button class="btn dark" style="width:100%;margin-top:14px" onclick="openEvent(3)">View event</button></div> 
+  </div> 
+  <div class="section-head"><div><span class="eyebrow">AT A GLANCE</span><h2>Your campus activity</h2></div></div> 
+  <div class="stats"><div class="stat"><small>Registered events</small><strong>4</strong><small>+1 this month</small></div><div class="stat"><small>Events this week</small><strong>2</strong><small>Keep exploring</small></div><div class="stat"><small>Certificates</small><strong>6</strong><small>Ready to download</small></div><div class="stat"><small>Events attended</small><strong>9</strong><small>Great progress</small></div></div> 
+  <div class="section-head"><div><span class="eyebrow">DISCOVER</span><h2>Popular this week</h2></div><button class="link" data-go="explore">View all →</button></div> 
+  <div class="event-grid" id="homeEvents"></div> 
+</section> 
+ 
+<section class="screen" id="explore"> 
+  <div class="page-head"><div><span class="eyebrow">EVENT DISCOVERY</span><h1>Explore events</h1><div class="sub">Discover technical, cultural, workshop and sports events.</div></div></div> 
+  <div class="filters" id="filters"><button class="filter active" data-filter="All">All</button><button class="filter" data-filter="Technical">Technical</button><button class="filter" data-filter="Cultural">Cultural</button><button class="filter" data-filter="Workshop">Workshop</button><button class="filter" data-filter="Sports">Sports</button></div> 
+  <div class="event-grid" id="exploreEvents"></div> 
+</section> 
+ 
+<section class="screen" id="registrations"> 
+  <div class="page-head"><div><span class="eyebrow">STUDENT</span><h1>My registrations</h1><div class="sub">Your schedule and digital event passes.</div></div></div> 
+  <div class="two"><div class="panel"><h3>Upcoming registrations</h3><div id="myList"></div></div><div class="panel"><h3>Digital event pass</h3><p class="sub">Show this QR code at the entrance.</p><div class="qr"></div><b style="font-size:11px">Sahaya Asmi · CSE</b></div></div> 
+</section> 
+ 
+<section class="screen" id="notifications"> 
+  <div class="page-head"><div><span class="eyebrow">UPDATES</span><h1>Notifications</h1><div class="sub">Reminders, confirmations and announcements.</div></div></div> 
+  <div class="panel"><div class="announcement"><b>UI/UX Workshop starts tomorrow</b><p>Room 204, Design Block. Bring your laptop.</p></div><div class="announcement"><b>Registration confirmed</b><p>You are registered for CodeSprint 2026.</p></div><div class="announcement"><b>Certificate available</b><p>Your Web Development Bootcamp certificate is ready.</p></div></div> 
+</section> 
+ 
+<section class="screen" id="feedback"> 
+  <div class="page-head"><div><span class="eyebrow">STUDENT</span><h1>Feedback</h1><div class="sub">Share your experience with event organizers.</div></div></div> 
+  <form class="form" onsubmit="event.preventDefault();toast('Feedback submitted successfully')"><div class="form-grid"><label>Event<select><option>UI/UX Design Workshop</option><option>CodeSprint 2026</option></select></label><label>Rating<select><option>★★★★★ Excellent</option><option>★★★★ Great</option><option>★★★ Good</option></select></label><label class="full">Comments<textarea rows="5" placeholder="What did you like or what can be improved?"></textarea></label></div><div class="form-foot"><button class="btn primary">Submit feedback →</button></div></form> 
+</section> 
+ 
+<!-- ORGANIZER DASHBOARD -->
+<section class="screen" id="orgDashboard">
+  <div class="page-head">
+    <div><span class="eyebrow">ORGANIZER</span><h1>Organizer dashboard</h1><div class="sub">Manage your events, registrations and attendance.</div></div>
+    <button class="btn primary" data-go="create">＋ Create event</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><small>Total events</small><strong id="orgTotalCount">12</strong></div>
+    <div class="stat"><small>Registrations</small><strong>624</strong></div>
+    <div class="stat"><small>Attendance</small><strong>71%</strong></div>
+    <div class="stat"><small>Average rating</small><strong>4.7</strong></div>
+  </div>
+
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">YOUR EVENT ECOSYSTEM</span>
+      <h2>My Organized Events (<span id="orgEventBadgeCount">12</span>)</h2>
+    </div>
+  </div>
+  
+  <div class="event-grid" id="orgEventGrid">
+  </div>
+</section> 
+
+<!-- ADMIN EVENTS SCREEN -->
+<section class="screen" id="adminEvents">
+  <div class="page-head">
+    <div>
+      <span class="eyebrow">ADMIN VIEW</span>
+      <h1>All Campus Events</h1>
+      <div class="sub">Complete record of all approved, live and completed events with organizer & attendance details.</div>
+    </div>
+  </div>
+
+  <div class="event-grid" id="adminEventsGrid">
+  </div>
+</section>
+
+<section class="screen" id="monitor"><div class="page-head"><div><span class="eyebrow">ADMIN ONLY</span><h1>Monitor events</h1><div class="sub">Campus-wide event status.</div></div></div><div class="event-grid"><article class="event"><div class="event-top"><div class="icon">●</div><span class="tag">LIVE</span></div><h3>UI/UX Design Workshop</h3><p>86 registered · 61 checked in · Room 204</p><div class="progress"><i style="width:71%"></i></div></article><article class="event"><div class="event-top"><div class="icon">✦</div><span class="tag">TODAY</span></div><h3>CodeSprint 2026</h3><p>120 registered · 98 checked in</p><div class="progress"><i style="width:82%"></i></div></article></div></section> 
+
+<section class="screen" id="create"> 
+  <div class="page-head"><div><span class="eyebrow">ORGANIZER</span><h1>Create event</h1><div class="sub">Submit an event for Admin approval.</div></div></div> 
+  <form class="form" id="createForm"><div class="form-grid"><label>Event name<input name="title" required placeholder="Product Design Masterclass"></label><label>Category<select name="cat"><option>Technical</option><option>Workshop</option><option>Cultural</option><option>Sports</option></select></label><label>Date<input name="date" type="date" required></label><label>Time<input name="time" type="time" required></label><label>Venue<input name="venue" required placeholder="Seminar Hall"></label><label>Capacity<input name="capacity" type="number" value="100"></label><label class="full">Description<textarea name="desc" rows="4" required placeholder="Describe your event..."></textarea></label></div><div class="form-foot"><button class="btn light" type="reset">Clear</button><button class="btn primary" type="submit">Send for approval →</button></div></form> 
+</section> 
+ 
+<!-- DYNAMIC MANAGE REGISTRATIONS SCREEN -->
+<section class="screen" id="manage">
+  <div class="page-head">
+    <div>
+      <span class="eyebrow">ORGANIZER</span>
+      <h1>Manage registrations</h1>
+      <div class="sub">Track registered participants and confirm registration status.</div>
+    </div>
+    <div style="min-width:220px">
+      <label style="font-size:10px;font-weight:bold;color:var(--muted-brown)">Select Event:</label>
+      <select id="manageEventSelect" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--warm-sand-border);margin-top:4px;outline:0;font-size:11px">
+      </select>
+    </div>
+  </div>
+  
+  <div class="panel">
+    <div class="section-head" style="margin-top:0">
+      <h3 id="manageEventTitle">UI/UX Design Workshop</h3>
+      <span class="sub" id="manageRegCount">86 / 120 registered</span>
+    </div>
+    <div class="progress"><i id="manageProgressBar" style="width:72%"></i></div>
+    
+    <table class="table" style="margin-top:15px">
+      <thead>
+        <tr>
+          <th>Participant Name</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="manageStudentTable">
+      </tbody>
+    </table>
+  </div>
+</section> 
+ 
+<section class="screen" id="attendance"><div class="page-head"><div><span class="eyebrow">ORGANIZER</span><h1>Attendance / QR</h1><div class="sub">Verify participants at the venue.</div></div></div><div class="two"><div class="panel"><h3>QR Scanner</h3><div class="qr"></div><button class="btn primary" onclick="toast('QR scanner opened')">Open scanner</button></div><div class="panel"><h3>Attendance</h3><div style="font-size:30px;font-weight:800;margin-top:16px">61 / 86</div><div class="sub">71% checked in</div><div class="progress" style="margin-top:14px"><i style="width:71%"></i></div></div></div></section> 
+ 
+<section class="screen" id="announcements"><div class="page-head"><div><span class="eyebrow">ORGANIZER</span><h1>Announcements</h1><div class="sub">Send updates to registered participants.</div></div></div><form class="form" onsubmit="event.preventDefault();toast('Announcement sent to participants')"><label>Message<textarea rows="5" required placeholder="Room changed to Seminar Hall 2..."></textarea></label><div class="form-foot"><button class="btn primary">Send announcement →</button></div></form></section> 
+ 
+<section class="screen" id="analytics">
+  <div class="page-head"><div><span class="eyebrow">ORGANIZER</span><h1>Event analytics</h1><div class="sub">Registrations, attendance and engagement performance graphs.</div></div></div>
+  <div class="stats">
+    <div class="stat"><small>Total registrations</small><strong>624</strong></div>
+    <div class="stat"><small>Average attendance</small><strong>83%</strong></div>
+    <div class="stat"><small>Average rating</small><strong>4.7</strong></div>
+    <div class="stat"><small>Monthly growth</small><strong>18%</strong></div>
+  </div>
+  
+  <div class="two" style="margin-top:20px">
+    <div class="chart-box">
+      <h3>Monthly Registration Trend</h3>
+      <div class="sub">Total student registrations over past 5 months</div>
+      <div class="bar-chart">
+        <div class="bar-group"><div class="bar" style="height:45%"></div><span class="bar-label">Apr</span></div>
+        <div class="bar-group"><div class="bar" style="height:60%"></div><span class="bar-label">May</span></div>
+        <div class="bar-group"><div class="bar" style="height:35%"></div><span class="bar-label">Jun</span></div>
+        <div class="bar-group"><div class="bar" style="height:75%"></div><span class="bar-label">Jul</span></div>
+        <div class="bar-group"><div class="bar" style="height:95%"></div><span class="bar-label">Aug</span></div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <h3>Registrations by Category</h3>
+      <div class="sub">Event type distribution</div>
+      <div style="margin-top:20px;display:grid;gap:14px">
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:bold;margin-bottom:4px"><span>Technical</span><span>42%</span></div><div class="progress"><i style="width:42%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:bold;margin-bottom:4px"><span>Workshops</span><span>28%</span></div><div class="progress"><i style="width:28%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:bold;margin-bottom:4px"><span>Cultural</span><span>18%</span></div><div class="progress"><i style="width:18%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:bold;margin-bottom:4px"><span>Sports</span><span>12%</span></div><div class="progress"><i style="width:12%"></i></div></div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+<section class="screen" id="approvals">
+  <div class="page-head">
+    <div>
+      <span class="eyebrow">ADMIN ONLY</span>
+      <h1>Approve / Reject events</h1>
+      <div class="sub">Review event requests submitted by organizers.</div>
+    </div>
+  </div>
+  <div class="panel">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Organizer</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="approvalList">
+      </tbody>
+    </table>
+  </div>
+</section>
+ 
+<!-- UNIFIED MANAGE USERS SCREEN -->
+<section class="screen" id="users">
+  <div class="page-head">
+    <div>
+      <span class="eyebrow">ADMIN ONLY</span>
+      <h1>Manage System Users</h1>
+      <div class="sub">Control student, organizer, and admin accounts, roles, and access status.</div>
+    </div>
+  </div>
+  <div class="panel">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>User Name</th>
+          <th>Role</th>
+          <th>Department / Club</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="userListTable">
+      </tbody>
+    </table>
+  </div>
+</section> 
+ 
+<!-- MERGED ADMIN REPORTS & ANALYTICS -->
+<section class="screen" id="reports">
+  <div class="page-head"><div><span class="eyebrow">ADMIN DASHBOARD & ANALYTICS</span><h1>Reports & System Overview</h1><div class="sub">Control campus event ecosystem and monitor growth statistics.</div></div></div>
+  
+  <div class="stats">
+    <div class="stat"><small>Active events</small><strong>42</strong></div>
+    <div class="stat"><small>Students</small><strong>1,482</strong></div>
+    <div class="stat"><small>Organizers</small><strong>38</strong></div>
+    <div class="stat"><small>Pending approvals</small><strong>7</strong></div>
+  </div>
+
+  <div class="two" style="margin-top:20px">
+    <div class="chart-box">
+      <h3>Campus Participation Growth</h3>
+      <div class="sub">Student engagement over months</div>
+      <svg class="line-graph" viewBox="0 0 300 120">
+        <path d="M0,100 Q40,80 80,60 T160,40 T240,20 T300,10" fill="none" stroke="#FF9A86" stroke-width="3"/>
+        <path d="M0,100 Q40,80 80,60 T160,40 T240,20 T300,10 L300,120 L0,120 Z" fill="rgba(255,154,134,0.15)"/>
+        <circle cx="80" cy="60" r="4" fill="#3D2520"/>
+        <circle cx="160" cy="40" r="4" fill="#3D2520"/>
+        <circle cx="240" cy="20" r="4" fill="#3D2520"/>
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted-brown);margin-top:8px">
+        <span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Aug</span>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <h3>Department Participation</h3>
+      <div class="sub">Engagement distribution by department</div>
+      <div style="margin-top:20px;display:grid;gap:14px">
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:bold;margin-bottom:4px"><span>CSE</span><span>88%</span></div><div class="progress"><i style="width:88%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:bold;margin-bottom:4px"><span>ECE</span><span>74%</span></div><div class="progress"><i style="width:74%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:bold;margin-bottom:4px"><span>EEE</span><span>62%</span></div><div class="progress"><i style="width:62%"></i></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:bold;margin-bottom:4px"><span>MECH</span><span>45%</span></div><div class="progress"><i style="width:45%"></i></div></div>
+      </div>
+    </div>
+  </div>
+</section> 
+</main> 
+</div> 
+ 
+<div class="modal" id="modal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><div id="modalContent"></div></div></div> 
+<div class="toast" id="toast"></div> 
+ 
+<div class="login" id="login"> 
+  <div class="login-card"> 
+    <div class="login-left"><span class="eyebrow" style="color:#FFD6A6">EVENTORA</span><h1>One platform for every campus event.</h1><p>Students discover. Organizers manage. Admins control the entire event ecosystem.</p><div>✓ Student event discovery<br>✓ Organizer event management<br>✓ Admin approval & analytics<br>✓ Role-based access control</div></div> 
+    <div class="login-right"><h2 id="loginTitle">Welcome back</h2><div class="sub">Choose your role and sign in.</div><div class="tabs"><button class="active" id="signInTab">Sign in</button><button id="signUpTab">Sign up</button></div><div id="nameWrap" class="hidden"><label>Name<input id="name"></label></div><label>Email<input id="email" type="email" placeholder="you@college.edu"></label><label>Password<input id="password" type="password" placeholder="••••••••"></label><label>Role<select id="roleSelect"><option value="Student">Student</option><option value="Organizer">Event Organizer</option><option value="Admin">Admin</option></select></label><button class="btn primary" style="width:100%;margin-top:8px" id="loginBtn">Sign in →</button><div class="switch" id="switch">New here? <button type="button" id="switchBtn">Create an account</button></div></div> 
+  </div> 
+</div> 
+ 
+<script src="script.js"></script>
+</body> 
+</html>
