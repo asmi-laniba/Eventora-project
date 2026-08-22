@@ -879,9 +879,15 @@ h3 {
   .page-head { display: block; }
   .page-head .btn { margin-top: 12px; }
 }
-/* Hide Powered by Netlify Badge */
-button:has(.fa-sparkles), 
-[class*="netlify"],
-body > button:last-child {
+/* Netlify Badge Force Hide */
+iframe[src*="netlify"],
+div[id*="netlify"],
+button[class*="netlify"],
+a[href*="netlify"],
+[aria-label*="Netlify"],
+.netlify-identity-widget {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
